@@ -12,32 +12,28 @@ public class LevelLoader : MonoBehaviour
     [SerializeField] private string splashScreenName;
     [SerializeField] private int secondsToWaitAndLoad;
 
-
-
     private void Start()
     {
+        //Obtener indice de la la escena actual al iniciarla
         currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //Si esta escena es la pantalla de carga, se espera 6 ssegundos para avanzar
+        if (currentSceneIndex.Equals(1)) StartCoroutine(WaitForTime());
     }
-
-    
 
     private IEnumerator WaitForTime()
     {
-            yield return new WaitForSeconds(secondsToWaitAndLoad);
-            LoadNextScene();
+        //Esperar y cargar
+        yield return new WaitForSeconds(secondsToWaitAndLoad);
+        LoadNextScene();
     }
 
     public void LoadNextScene()
     {
-        if (currentSceneIndex + 1 == 1) StartCoroutine(WaitForTime());
-        else SceneManager.LoadScene(currentSceneIndex + 1);
+        SceneManager.LoadScene(currentSceneIndex + 1);
     }
-
 
     public void QuitGame()
     {
         Application.Quit();
     }
-
-
 }
